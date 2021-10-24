@@ -167,6 +167,23 @@ function setLayerOpacity(layer) {
     });
 }
 
+function tagger() {
+    var refTagger = {
+        settings: {
+            bibleVersion: 'ESV'
+        }
+    };
+
+    (function(d, t) {
+        var n=d.querySelector('[nonce]');
+        refTagger.settings.nonce = n && (n.nonce||n.getAttribute('nonce'));
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = 'https://api.reftagger.com/v2/RefTagger.js';
+        g.nonce = refTagger.settings.nonce;
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+}
+
 function load(config) {
     document.getElementById('loading').remove();
 
@@ -347,6 +364,7 @@ function load(config) {
 
     // setup resize event
     window.addEventListener('resize', scroller.resize);
+    tagger();
 }
 
 fetch('https://raw.githubusercontent.com/smaclell/living-atlas/it-is-not-so-bad/src/config.json')
